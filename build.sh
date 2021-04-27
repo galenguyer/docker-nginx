@@ -32,3 +32,12 @@ docker build --build-arg NGINX_VER="$nginx_stable" \
              -t "$registry"/nginx:alpine-stable \
              -t "$registry"/nginx:alpine-"$nginx_stable" \
              -f Dockerfile.alpine .
+
+ # if a registry is specified, push to it
+if [ "$registry" != "local" ]; then
+  docker push "$registry"/nginx:alpine
+  docker push "$registry"/nginx:alpine-mainline
+  docker push "$registry"/nginx:alpine-"$nginx_mainline"
+  docker push "$registry"/nginx:alpine-stable
+  docker push "$registry"/nginx:alpine-"$nginx_stable"
+fi
