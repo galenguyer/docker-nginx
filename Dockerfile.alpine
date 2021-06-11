@@ -1,4 +1,5 @@
-FROM alpine:latest AS builder
+arg ALPINE_VER="latest"
+FROM alpine:"$ALPINE_VER" AS builder
 RUN apk add gcc g++ git curl make linux-headers tar gzip
 
 WORKDIR /src/pcre
@@ -43,7 +44,7 @@ ARG CORE_COUNT="1"
 RUN make -j"$CORE_COUNT"
 RUN make install
 
-FROM alpine:latest
+FROM alpine:"$ALPINE_VER"
 
 # setup nginx folders and files
 RUN adduser www-data -D -H \
