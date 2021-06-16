@@ -29,7 +29,8 @@ registry="${REGISTRY:-local}"
 echo "using registry $registry..."
 
 # retrieve latest alpine version
-alpine="$(curl -sSL https://www.alpinelinux.org/downloads/ | grep -P 'Current Alpine Version' | grep -o -P '\d+\.\d+\.\d+')"
+alpine_lat="$(curl -sSL https://www.alpinelinux.org/downloads/ | grep -P 'Current Alpine Version' | grep -o -P '\d+\.\d+\.\d+')"
+alpine="${ALPINE:-$alpine_lat}"
 echo "using alpine version $alpine..."
 
 # retreive latest nginx stable version
@@ -49,6 +50,7 @@ docker build --build-arg ALPINE_VER="$alpine" \
              --build-arg NGINX_VER="$nginx_mainline" \
              --build-arg CORE_COUNT="$core_count" \
              -t "$registry/nginx:latest" \
+             -t "$registry/nginx:mainline" \
              -t "$registry/nginx:$nginx_mainline" \
              -t "$registry/nginx:alpine" \
              -t "$registry/nginx:alpine$alpine" \
@@ -61,6 +63,7 @@ docker build --build-arg ALPINE_VER="$alpine" \
 docker build --build-arg ALPINE_VER="$alpine" \
              --build-arg NGINX_VER="$nginx_stable" \
              --build-arg CORE_COUNT="$core_count" \
+             -t "$registry/nginx:stable" \
              -t "$registry/nginx:$nginx_stable" \
              -t "$registry/nginx:alpine-stable" \
              -t "$registry/nginx:alpine$alpine-stable" \
@@ -71,6 +74,7 @@ docker build --build-arg ALPINE_VER="$alpine" \
  # if a registry is specified, push to it
 if [ "$registry" != "local" ]; then
   docker push "$registry/nginx:latest"
+  docker push "$registry/nginx:mainline"
   docker push "$registry/nginx:$nginx_mainline"
   docker push "$registry/nginx:alpine"
   docker push "$registry/nginx:alpine$alpine"
@@ -78,6 +82,7 @@ if [ "$registry" != "local" ]; then
   docker push "$registry/nginx:alpine$alpine-mainline"
   docker push "$registry/nginx:alpine-$nginx_mainline"
   docker push "$registry/nginx:alpine$alpine-$nginx_mainline"
+  docker push "$registry/nginx:stable"
   docker push "$registry/nginx:$nginx_stable"
   docker push "$registry/nginx:alpine-stable"
   docker push "$registry/nginx:alpine$alpine-stable"
