@@ -57,7 +57,7 @@ RUN adduser www-data -D -H \
 	&& mkdir -p /etc/nginx 
 
 # copy in default nginx configs
-COPY conf/ /etc/nginx/
+COPY --from=builder /etc/nginx/ /etc/nginx/
 
 RUN chown -R www-data:www-data /etc/nginx
 
