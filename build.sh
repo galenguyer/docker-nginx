@@ -11,10 +11,10 @@ set -o nounset
 if command -v podman 2>&1 >/dev/null; then
 	echo "using podman..."
 	# enable aliases for non-interactive mode
-	shopt -s expand_aliases	
+	shopt -s expand_aliases
 	alias docker="podman"
 
-# if apt is installed, use the debian dependencies
+# otherwise use docker
 elif command -v docker 2>&1 >/dev/null; then
 	echo "using docker..."
 
