@@ -15,9 +15,12 @@ variable "REGISTRY" {
 }
 
 group "default" {
+    targets = ["alpine", "fancyindex-alpine"]
+}
+group "alpine" {
     targets = ["alpine-mainline", "alpine-stable"]
 }
-group "fancyindex" {
+group "fancyindex-alpine" {
     targets = ["fancyindex-alpine-mainline", "fancyindex-alpine-stable"]
 }
 

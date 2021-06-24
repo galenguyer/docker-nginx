@@ -54,11 +54,10 @@ RUN adduser www-data -D -H -G www-data \
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log \
 	&& touch /run/nginx.pid && chown www-data:www-data /run/nginx.pid \
-	&& mkdir -p /etc/nginx 
+	&& mkdir -p /etc/nginx
 
 # copy in default nginx configs
 COPY --from=builder /etc/nginx/ /etc/nginx/
-
 RUN chown -R www-data:www-data /etc/nginx
 
 # add nginx binary
