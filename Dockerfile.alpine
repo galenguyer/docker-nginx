@@ -1,6 +1,6 @@
 arg ALPINE_VER="latest"
 FROM alpine:"$ALPINE_VER" AS builder
-RUN apk add gcc g++ git curl make linux-headers tar gzip
+RUN apk add gcc g++ git curl make linux-headers tar gzip geoip-dev gd-dev libxslt-dev pcre-dev perl-dev 
 
 WORKDIR /src/pcre
 ARG PCRE_VER="8.44"
