@@ -42,7 +42,7 @@ export CORE_COUNT="$core_count"
 export REGISTRY="$registry"
 export NGINX_MAINLINE="$nginx_mainline"
 export NGINX_STABLE="$nginx_stable"
-docker buildx bake 
+docker buildx bake "$@"
 
  # if a registry is specified, push to it
 if [ "$registry" != "local" ]; then
