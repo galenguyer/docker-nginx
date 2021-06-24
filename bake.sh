@@ -52,10 +52,18 @@ if [ "$registry" != "local" ]; then
   docker push "$registry/nginx:alpine-mainline"
   docker push "$registry/nginx:stable"
   docker push "$registry/nginx:alpine-stable"
+
   docker push "$registry/nginx:fancyindex"
   docker push "$registry/nginx:fancyindex-mainline"
   docker push "$registry/nginx:fancyindex-alpine"
   docker push "$registry/nginx:fancyindex-alpine-mainline"
   docker push "$registry/nginx:fancyindex-stable"
   docker push "$registry/nginx:fancyindex-alpine-stable"
+
+  docker push "$registry/nginx:js-challenge"
+  docker push "$registry/nginx:js-challenge-mainline"
+  docker push "$registry/nginx:js-challenge-alpine"
+  docker push "$registry/nginx:js-challenge-alpine-mainline"
+  docker push "$registry/nginx:js-challenge-stable"
+  docker push "$registry/nginx:js-challenge-alpine-stable"
 fi

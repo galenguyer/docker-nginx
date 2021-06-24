@@ -15,13 +15,16 @@ variable "REGISTRY" {
 }
 
 group "default" {
-    targets = ["alpine", "fancyindex-alpine"]
+    targets = ["alpine", "fancyindex-alpine", "js-challenge-alpine"]
 }
 group "alpine" {
     targets = ["alpine-mainline", "alpine-stable"]
 }
 group "fancyindex-alpine" {
     targets = ["fancyindex-alpine-mainline", "fancyindex-alpine-stable"]
+}
+group "js-challenge-alpine" {
+    targets = ["js-challenge-alpine-mainline", "js-challenge-alpine-stable"]
 }
 
 target "alpine-mainline" {
@@ -75,5 +78,32 @@ target "fancyindex-alpine-stable" {
     tags = [
         "${REGISTRY}/nginx:fancyindex-stable",
         "${REGISTRY}/nginx:fancyindex-alpine-stable",
+    ]
+}
+
+target "js-challenge-alpine-mainline" {
+    dockerfile = "Dockerfile.js-challenge-alpine"
+    args = {
+        ALPINE_VER="${ALPINE_VER}"
+        NGINX_VER="${NGINX_MAINLINE}"
+        CORE_COUNT="${CORE_COUNT}"
+    }
+    tags = [
+        "${REGISTRY}/nginx:js-challenge",
+        "${REGISTRY}/nginx:js-challenge-mainline",
+        "${REGISTRY}/nginx:js-challenge-alpine",
+        "${REGISTRY}/nginx:js-challenge-alpine-mainline",
+    ]
+}
+target "js-challenge-alpine-stable" {
+    dockerfile = "Dockerfile.js-challenge-alpine"
+    args = {
+        ALPINE_VER="${ALPINE_VER}"
+        NGINX_VER="${NGINX_STABLE}"
+        CORE_COUNT="${CORE_COUNT}"
+    }
+    tags = [
+        "${REGISTRY}/nginx:js-challenge-stable",
+        "${REGISTRY}/nginx:js-challenge-alpine-stable",
     ]
 }
