@@ -15,13 +15,16 @@ variable "REGISTRY" {
 }
 
 group "default" {
-    targets = ["alpine", "fancyindex-alpine", "js-challenge-alpine"]
+    targets = ["alpine", "fancyindex-alpine", "spa-alpine", "js-challenge-alpine"]
 }
 group "alpine" {
     targets = ["alpine-mainline", "alpine-stable"]
 }
 group "fancyindex-alpine" {
     targets = ["fancyindex-alpine-mainline", "fancyindex-alpine-stable"]
+}
+group "spa-alpine" {
+    targets = ["spa-alpine-mainline", "spa-alpine-stable"]
 }
 group "js-challenge-alpine" {
     targets = ["js-challenge-alpine-mainline", "js-challenge-alpine-stable"]
@@ -78,6 +81,33 @@ target "fancyindex-alpine-stable" {
     tags = [
         "${REGISTRY}/nginx:fancyindex-stable",
         "${REGISTRY}/nginx:fancyindex-alpine-stable",
+    ]
+}
+
+target "spa-alpine-mainline" {
+    dockerfile = "Dockerfile.spa-alpine"
+    args = {
+        ALPINE_VER="${ALPINE_VER}"
+        NGINX_VER="${NGINX_MAINLINE}"
+        CORE_COUNT="${CORE_COUNT}"
+    }
+    tags = [
+        "${REGISTRY}/nginx:spa",
+        "${REGISTRY}/nginx:spa-mainline",
+        "${REGISTRY}/nginx:spa-alpine",
+        "${REGISTRY}/nginx:spa-alpine-mainline",
+    ]
+}
+target "spa-alpine-stable" {
+    dockerfile = "Dockerfile.spa-alpine"
+    args = {
+        ALPINE_VER="${ALPINE_VER}"
+        NGINX_VER="${NGINX_STABLE}"
+        CORE_COUNT="${CORE_COUNT}"
+    }
+    tags = [
+        "${REGISTRY}/nginx:spa-stable",
+        "${REGISTRY}/nginx:spa-alpine-stable",
     ]
 }
 
