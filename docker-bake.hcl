@@ -8,13 +8,16 @@ group "default" {
     targets = ["alpine"]
 }
 group "alpine" {
-    targets = ["alpine-base", "alpine-spa"]
+    targets = ["alpine-base", "alpine-spa", "alpine-autoindex"]
 }
 group "alpine-base" {
     targets = ["alpine-mainline", "alpine-stable"]
 }
 group "alpine-spa" {
     targets = ["alpine-mainline-spa", "alpine-stable-spa"]
+}
+group "alpine-autoindex" {
+    targets = ["alpine-mainline-autoindex", "alpine-stable-autoindex"]
 }
 
 target "alpine-mainline" {
@@ -88,5 +91,42 @@ target "alpine-stable-spa" {
         "${REGISTRY}/nginx:${NGINX_STABLE}-spa",
         "${REGISTRY}/nginx:${NGINX_STABLE}-alpine-spa",
         "${REGISTRY}/nginx:${NGINX_STABLE}-alpine${ALPINE_VER}-spa",
+    ]
+}
+
+target "alpine-mainline-autoindex" {
+    context = "alpine/autoindex/"
+    args = {
+        ALPINE_VER="${ALPINE_VER}"
+        NGINX_VER="${NGINX_MAINLINE}"
+        CORE_COUNT="${CORE_COUNT}"
+    }
+    tags = [
+        "${REGISTRY}/nginx:autoindex",
+        "${REGISTRY}/nginx:alpine-autoindex",
+        "${REGISTRY}/nginx:alpine${ALPINE_VER}-autoindex",
+        "${REGISTRY}/nginx:mainline-autoindex",
+        "${REGISTRY}/nginx:mainline-alpine-autoindex",
+        "${REGISTRY}/nginx:mainline-alpine${ALPINE_VER}-autoindex",
+        "${REGISTRY}/nginx:${NGINX_MAINLINE}-autoindex",
+        "${REGISTRY}/nginx:${NGINX_MAINLINE}-alpine-autoindex",
+        "${REGISTRY}/nginx:${NGINX_MAINLINE}-alpine${ALPINE_VER}-autoindex",
+    ]
+}
+
+target "alpine-stable-autoindex" {
+    context = "alpine/autoindex/"
+    args = {
+        ALPINE_VER="${ALPINE_VER}"
+        NGINX_VER="${NGINX_STABLE}"
+        CORE_COUNT="${CORE_COUNT}"
+    }
+    tags = [
+        "${REGISTRY}/nginx:stable-autoindex",
+        "${REGISTRY}/nginx:stable-alpine-autoindex",
+        "${REGISTRY}/nginx:stable-alpine${ALPINE_VER}-autoindex",
+        "${REGISTRY}/nginx:${NGINX_STABLE}-autoindex",
+        "${REGISTRY}/nginx:${NGINX_STABLE}-alpine-autoindex",
+        "${REGISTRY}/nginx:${NGINX_STABLE}-alpine${ALPINE_VER}-autoindex",
     ]
 }
