@@ -7,15 +7,15 @@ ARG ALPINE_VER="latest"
 FROM alpine:"$ALPINE_VER" AS builder
 RUN apk add gcc g++ git curl make linux-headers tar gzip geoip-dev gd-dev libxslt-dev pcre-dev perl-dev 
 
-WORKDIR /src/pcre
-ARG PCRE_VER="8.44"
-RUN curl -L -O "https://cfhcable.dl.sourceforge.net/project/pcre/pcre/$PCRE_VER/pcre-$PCRE_VER.tar.gz"
-RUN tar xzf "/src/pcre/pcre-$PCRE_VER.tar.gz"
+WORKDIR /src/pcre2/
+ARG PCRE2_VER="10.40"
+RUN curl -L -O "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-$PCRE2_VER/pcre2-$PCRE2_VER.tar.gz"
+RUN tar xzf "/src/pcre2/pcre2-$PCRE2_VER.tar.gz"
 
 WORKDIR /src/nginx
 ARG NGINX_VER
 RUN curl -L -O "http://nginx.org/download/nginx-$NGINX_VER.tar.gz"
-RUN tar xzf "nginx-$NGINX_VER.tar.gz"
+RUN tar xzf "/src/nginx/nginx-$NGINX_VER.tar.gz"
 
 # configure and build nginx
 WORKDIR /src/nginx/nginx-"$NGINX_VER"
@@ -32,7 +32,7 @@ RUN ./configure --prefix=/usr/share/nginx \
 	--group=www-data \
 	--with-threads \
 	--with-file-aio \
-	--with-pcre="/src/pcre/pcre-$PCRE_VER" \
+	--with-pcre="/src/pcre2/pcre2-$PCRE2_VER" \
 	--with-pcre-jit \
 	--with-http_addition_module \
 	--without-http_fastcgi_module \

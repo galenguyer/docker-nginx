@@ -27,6 +27,7 @@ target "alpine-mainline" {
         NGINX_VER="${NGINX_MAINLINE}"
         CORE_COUNT="${CORE_COUNT}"
     }
+    platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
     tags = [
         "${REGISTRY}/nginx:latest",
         "${REGISTRY}/nginx:alpine",
@@ -47,6 +48,7 @@ target "alpine-stable" {
         NGINX_VER="${NGINX_STABLE}"
         CORE_COUNT="${CORE_COUNT}"
     }
+    platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
     tags = [
         "${REGISTRY}/nginx:stable",
         "${REGISTRY}/nginx:stable-alpine",
@@ -64,6 +66,7 @@ target "alpine-mainline-spa" {
         NGINX_VER="${NGINX_MAINLINE}"
         CORE_COUNT="${CORE_COUNT}"
     }
+    platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
     tags = [
         "${REGISTRY}/nginx:spa",
         "${REGISTRY}/nginx:alpine-spa",
@@ -84,6 +87,7 @@ target "alpine-stable-spa" {
         NGINX_VER="${NGINX_STABLE}"
         CORE_COUNT="${CORE_COUNT}"
     }
+    platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
     tags = [
         "${REGISTRY}/nginx:stable-spa",
         "${REGISTRY}/nginx:stable-alpine-spa",
@@ -101,6 +105,7 @@ target "alpine-mainline-autoindex" {
         NGINX_VER="${NGINX_MAINLINE}"
         CORE_COUNT="${CORE_COUNT}"
     }
+    platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
     tags = [
         "${REGISTRY}/nginx:autoindex",
         "${REGISTRY}/nginx:alpine-autoindex",
@@ -121,6 +126,7 @@ target "alpine-stable-autoindex" {
         NGINX_VER="${NGINX_STABLE}"
         CORE_COUNT="${CORE_COUNT}"
     }
+    platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
     tags = [
         "${REGISTRY}/nginx:stable-autoindex",
         "${REGISTRY}/nginx:stable-alpine-autoindex",
