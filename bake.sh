@@ -55,11 +55,11 @@ echo "## tags" >> README.md
 target_info="$(docker buildx bake --print | jq '.target')"
 targets="$(echo $target_info | jq -r '.|keys[]')"
 for target in $targets; do
-    tags="$(echo "$target_info" | jq -r '[."'"$target"'".tags|.[]|split(":")|.[1]]|join(", ")')"
-    echo "- $target: $tags" >> README.md
+    tags="$(echo "$target_info" | jq -r '[."'"$target"'".tags|.[]|split(":")|.[1]|"`\(.)`"]|join(", ")')"
+    echo "- **$target**: $tags" >> README.md
 done
 echo -e "\n## build options" >> README.md
-echo "ALPINE_VER: $ALPINE_VER" >> README.md
-echo "NGINX_MAINLINE: $NGINX_MAINLINE" >> README.md
-echo "NGINX_STABLE: $NGINX_STABLE" >> README.md
-echo "PCRE2_VER: $PCRE2_VER" >> README.md
+echo "- **ALPINE**: "'`'"$ALPINE_VER"'`'"" >> README.md
+echo "- **NGINX_MAINLINE**: "'`'"$NGINX_MAINLINE"'`'"" >> README.md
+echo "- **NGINX_STABLE**: "'`'"$NGINX_STABLE"'`'"" >> README.md
+echo "- **PCRE2**: "'`'"$PCRE2_VER"'`'"" >> README.md
