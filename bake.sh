@@ -30,6 +30,10 @@ echo "using nginx stable version $nginx_stable..." >&2
 nginx_mainline="${NGINX_MAINLINE:-$(curl -sSL https://nginx.org/en/download.html | grep -P '(\/download\/nginx-\d+\.\d+\.\d+\.tar\.gz)' -o | uniq | head -n1 | grep -o -P '\d+\.\d+\.\d+')}"
 echo "using nginx mainline version $nginx_mainline..." >&2
 
+# retrieve latest pcre2 version
+pcre="${PCRE:-$(curl -sSL https://api.github.com/repos/PCRE2Project/pcre2/releases/latest | jq -r '.name')}"
+echo "using pcre2 version $pcre..." >&2
+
 # pass core count into container for build process
 core_count="${CORE_COUNT:-$(nproc)}"
 echo "using $core_count cores..." >&2
@@ -40,6 +44,22 @@ export CORE_COUNT="$core_count"
 export REGISTRY="$registry"
 export NGINX_MAINLINE="$nginx_mainline"
 export NGINX_STABLE="$nginx_stable"
+export PCRE2_VER="$pcre"
 docker buildx bake \
     $(if [ "${REGISTRY}" != "local" ]; then echo "--push"; fi) \
     "$@"
+
+echo "# docker-nginx" > README.md
+echo -e "automatic builds of nginx with multiple architectures and rootless support\n" >> README.md
+echo "## tags" >> README.md
+target_info="$(docker buildx bake --print | jq '.target')"
+targets="$(echo $target_info | jq -r '.|keys[]')"
+for target in $targets; do
+    tags="$(echo "$target_info" | jq -r '[."'"$target"'".tags|.[]|split(":")|.[1]]|join(", ")')"
+    echo "- $target: $tags" >> README.md
+done
+echo -e "\n## build options" >> README.md
+echo "ALPINE_VER: $ALPINE_VER" >> README.md
+echo "NGINX_MAINLINE: $NGINX_MAINLINE" >> README.md
+echo "NGINX_STABLE: $NGINX_STABLE" >> README.md
+echo "PCRE2_VER: $PCRE2_VER" >> README.md

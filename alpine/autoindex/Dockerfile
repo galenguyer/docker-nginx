@@ -5,12 +5,12 @@ ARG TARGETVARIANT=""
 
 ARG ALPINE_VER="latest"
 FROM alpine:"$ALPINE_VER" AS builder
-RUN apk add gcc g++ git curl make linux-headers tar gzip geoip-dev gd-dev libxslt-dev pcre-dev perl-dev 
+RUN apk add gcc g++ git curl make linux-headers tar gzip geoip-dev gd-dev libxslt-dev pcre-dev perl-dev
 
 WORKDIR /src/pcre2/
-ARG PCRE2_VER="10.40"
-RUN curl -L -O "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-$PCRE2_VER/pcre2-$PCRE2_VER.tar.gz"
-RUN tar xzf "/src/pcre2/pcre2-$PCRE2_VER.tar.gz"
+ARG PCRE2_VER="pcre2-10.40"
+RUN curl -L -O "https://github.com/PCRE2Project/pcre2/releases/download/$PCRE2_VER/$PCRE2_VER.tar.gz"
+RUN tar xzf "/src/pcre2/$PCRE2_VER.tar.gz"
 
 WORKDIR /src/nginx
 ARG NGINX_VER
@@ -32,7 +32,7 @@ RUN ./configure --prefix=/usr/share/nginx \
 	--group=www-data \
 	--with-threads \
 	--with-file-aio \
-	--with-pcre="/src/pcre2/pcre2-$PCRE2_VER" \
+	--with-pcre="/src/pcre2/$PCRE2_VER" \
 	--with-pcre-jit \
 	--with-http_addition_module \
 	--without-http_fastcgi_module \
