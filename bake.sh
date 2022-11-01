@@ -14,6 +14,12 @@ else
 	exit 1
 fi
 
+# check for jq
+if ! command -v jq 2>&1 >/dev/null; then
+       echo "could not find jq, exiting" >&2
+       exit 1
+fi
+
 # if no registry is provided, tag image as "local" registry
 registry="${REGISTRY:-local}"
 echo "using registry $registry..." >&2
