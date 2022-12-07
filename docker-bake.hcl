@@ -1,6 +1,7 @@
 variable "ALPINE_VER" { default = "UNSET" }
 variable "NGINX_MAINLINE" { default = "UNSET" }
 variable "NGINX_STABLE" { default = "UNSET" }
+variable "PCRE2_VER" { default = "UNSET" }
 variable "CORE_COUNT" { default = "1" }
 variable "REGISTRY" { default = "local" }
 
@@ -25,6 +26,7 @@ target "alpine-mainline" {
     args = {
         ALPINE_VER="${ALPINE_VER}"
         NGINX_VER="${NGINX_MAINLINE}"
+	PCRE2_VER="${PCRE2_VER}"
         CORE_COUNT="${CORE_COUNT}"
     }
     platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
@@ -46,6 +48,7 @@ target "alpine-stable" {
     args = {
         ALPINE_VER="${ALPINE_VER}"
         NGINX_VER="${NGINX_STABLE}"
+	PCRE2_VER="${PCRE2_VER}"
         CORE_COUNT="${CORE_COUNT}"
     }
     platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
@@ -64,6 +67,7 @@ target "alpine-mainline-spa" {
     args = {
         ALPINE_VER="${ALPINE_VER}"
         NGINX_VER="${NGINX_MAINLINE}"
+	PCRE2_VER="${PCRE2_VER}"
         CORE_COUNT="${CORE_COUNT}"
     }
     platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
@@ -85,6 +89,7 @@ target "alpine-stable-spa" {
     args = {
         ALPINE_VER="${ALPINE_VER}"
         NGINX_VER="${NGINX_STABLE}"
+	PCRE2_VER="${PCRE2_VER}"
         CORE_COUNT="${CORE_COUNT}"
     }
     platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
@@ -103,6 +108,7 @@ target "alpine-mainline-autoindex" {
     args = {
         ALPINE_VER="${ALPINE_VER}"
         NGINX_VER="${NGINX_MAINLINE}"
+	PCRE2_VER="${PCRE2_VER}"
         CORE_COUNT="${CORE_COUNT}"
     }
     platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
@@ -124,6 +130,7 @@ target "alpine-stable-autoindex" {
     args = {
         ALPINE_VER="${ALPINE_VER}"
         NGINX_VER="${NGINX_STABLE}"
+	PCRE2_VER="${PCRE2_VER}"
         CORE_COUNT="${CORE_COUNT}"
     }
     platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]

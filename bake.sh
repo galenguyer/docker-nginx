@@ -37,7 +37,7 @@ nginx_mainline="${NGINX_MAINLINE:-$(curl -sSL https://nginx.org/en/download.html
 echo "using nginx mainline version $nginx_mainline..." >&2
 
 # retrieve latest pcre2 version
-pcre="${PCRE:-$(curl -sSL https://api.github.com/repos/PCRE2Project/pcre2/releases/latest | jq -r '.name')}"
+pcre="${PCRE:-$(curl -sSL https://api.github.com/repos/PCRE2Project/pcre2/releases/latest | jq -r '.tag_name')}"
 echo "using pcre2 version $pcre..." >&2
 
 # pass core count into container for build process
