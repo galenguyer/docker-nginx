@@ -1,4 +1,5 @@
 variable "ALPINE_VER" { default = "UNSET" }
+variable "DEBIAN_VER" { default = "UNSET" }
 variable "NGINX_MAINLINE" { default = "UNSET" }
 variable "NGINX_STABLE" { default = "UNSET" }
 variable "PCRE2_VER" { default = "UNSET" }
@@ -6,7 +7,7 @@ variable "CORE_COUNT" { default = "1" }
 variable "REGISTRY" { default = "local" }
 
 group "default" {
-    targets = ["alpine"]
+    targets = ["alpine", "debian"]
 }
 group "alpine" {
     targets = ["alpine-base", "alpine-spa", "alpine-autoindex"]
@@ -20,6 +21,14 @@ group "alpine-spa" {
 group "alpine-autoindex" {
     targets = ["alpine-mainline-autoindex", "alpine-stable-autoindex"]
 }
+
+group "debian" {
+    targets = ["debian-base"]
+}
+group "debian-base" {
+    targets = ["debian-mainline", "debian-stable"]
+}
+
 
 target "alpine-mainline" {
     context = "alpine/base/"
@@ -141,5 +150,42 @@ target "alpine-stable-autoindex" {
         "${REGISTRY}/nginx:${NGINX_STABLE}-autoindex",
         "${REGISTRY}/nginx:${NGINX_STABLE}-alpine-autoindex",
         "${REGISTRY}/nginx:${NGINX_STABLE}-alpine${ALPINE_VER}-autoindex",
+    ]
+}
+
+
+target "debian-mainline" {
+    context = "debian/base/"
+    args = {
+        DEBIAN_VER="${DEBIAN_VER}"
+        NGINX_VER="${NGINX_MAINLINE}"
+	PCRE2_VER="${PCRE2_VER}"
+        CORE_COUNT="${CORE_COUNT}"
+    }
+    platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
+    tags = [
+        "${REGISTRY}/nginx:debian",
+        "${REGISTRY}/nginx:debian${DEBIAN_VER}",
+        "${REGISTRY}/nginx:mainline-debian",
+        "${REGISTRY}/nginx:mainline-debian${DEBIAN_VER}",
+        "${REGISTRY}/nginx:${NGINX_MAINLINE}-debian",
+        "${REGISTRY}/nginx:${NGINX_MAINLINE}-debian${DEBIAN_VER}",
+    ]
+}
+
+target "debian-stable" {
+    context = "debian/base/"
+    args = {
+        DEBIAN_VER="${DEBIAN_VER}"
+        NGINX_VER="${NGINX_STABLE}"
+	PCRE2_VER="${PCRE2_VER}"
+        CORE_COUNT="${CORE_COUNT}"
+    }
+    platforms = ["linux/amd64", "linux/386", "linux/arm/v6", "linux/arm/v7", "linux/arm64"]
+    tags = [
+        "${REGISTRY}/nginx:stable-debian",
+        "${REGISTRY}/nginx:stable-debian${DEBIAN_VER}",
+        "${REGISTRY}/nginx:${NGINX_STABLE}-debian",
+        "${REGISTRY}/nginx:${NGINX_STABLE}-debian${DEBIAN_VER}",
     ]
 }

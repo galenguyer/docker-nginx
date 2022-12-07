@@ -28,6 +28,10 @@ echo "using registry $registry..." >&2
 alpine="${ALPINE:-$(curl -sSL https://www.alpinelinux.org/downloads/ | grep -P 'Current Alpine Version' | grep -o -P '\d+\.\d+\.\d+')}"
 echo "using alpine version $alpine..." >&2
 
+# retrieve latest debian version
+debian="${DEBIAN:-11.5}"
+echo "using alpine version $debian..." >&2
+
 # retreive latest nginx stable version
 nginx_stable="${NGINX_STABLE:-$(curl -sSL https://nginx.org/en/download.html | grep -P '(\/download\/nginx-\d+\.\d+\.\d+\.tar\.gz)' -o | uniq | head -n2 | tail -n1 | grep -o -P '\d+\.\d+\.\d+')}"
 echo "using nginx stable version $nginx_stable..." >&2
@@ -46,6 +50,7 @@ echo "using $core_count cores..." >&2
 
 # create docker images
 export ALPINE_VER="$alpine"
+export DEBIAN_VER="$debian"
 export CORE_COUNT="$core_count"
 export REGISTRY="$registry"
 export NGINX_MAINLINE="$nginx_mainline"
@@ -66,6 +71,7 @@ for target in $targets; do
 done
 echo -e "\n## build options" >> README.md
 echo "- **ALPINE**: "'`'"$ALPINE_VER"'`'"" >> README.md
+echo "- **DEBIAN**: "'`'"$DEBIAN_VER"'`'"" >> README.md
 echo "- **NGINX_MAINLINE**: "'`'"$NGINX_MAINLINE"'`'"" >> README.md
 echo "- **NGINX_STABLE**: "'`'"$NGINX_STABLE"'`'"" >> README.md
 echo "- **PCRE2**: "'`'"$PCRE2_VER"'`'"" >> README.md
